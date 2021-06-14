@@ -6,6 +6,6 @@ export default {
   },
   USER: {
     BASE_URL: "/api/v1/user",
-    GROUP_JOIN:"api/v1/group/join"
+    GROUP_JOIN:"/group/join"
   },
 };

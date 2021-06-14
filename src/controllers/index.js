@@ -1,1 +1,1 @@
-export { default as getPageController } from './security.controller';
+export { default as userController } from './user.Controller';

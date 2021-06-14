@@ -38,12 +38,13 @@ const connectMongoDB = async () => {
 		});
 
 		db.on('open', () => {
-			// console.info(
-			// 	greenBright(
-			// 		`DB Connection with ${DATABASE_NAME} established successfully.`,
-			// 	),
-			// );
+			console.info(
+				greenBright(
+					`DB Connection with ${DATABASE_NAME} established successfully.`,
+				),
+			);
 		});
+		
 	} catch (error) {
 		console.error(redBright('Error occured in db connection', error));
 		process.exit(-1);

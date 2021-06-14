@@ -1,10 +1,10 @@
 import { INTERNAL_LINKS } from '../enum';
-import { securityRoutes } from '../routes';
+import { userRoutes } from '../routes';
 
 const expressRoutes = (server) => {
     return new Promise((resolve, reject) => {
         // Routes
-        server.use(INTERNAL_LINKS.SECURITY.BASE_URL, securityRoutes);
+        server.use(INTERNAL_LINKS.USER.BASE_URL, userRoutes);
         resolve();
     });
 };
