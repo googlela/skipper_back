@@ -11,6 +11,7 @@ const joinGroup = async (req, res) => {
       throw "user not save";
     }
     let saveuserGroup;
+    let groupId;
     if (userSave) {
       let data = await userGroupModel.findOne().sort({ createdAt: -1 });
       if (data) {
@@ -20,6 +21,7 @@ const joinGroup = async (req, res) => {
           id.push(userSave._id);
           const userGroup = new userGroupModel({ user: id });
           saveuserGroup = await userGroup.save();
+          groupId = saveuserGroup._id;
         } else {
           let userId = userSave._id;
 
@@ -29,19 +31,23 @@ const joinGroup = async (req, res) => {
               $push: { user: Types.ObjectId(userId) },
             }
           );
+
+          groupId = data._id;
         }
         if (!saveuserGroup) {
           throw "userGroup not save";
         } else {
-          console.log('saveuserGroup', saveuserGroup)
-          const data = await userGroupModel
-          .findById(saveuserGroup._id)
-          .populate("user");
-          console.log("data", data);
+          console.log("saveuserGroup", saveuserGroup);
+          const data = await userGroupModel.findById(groupId);
+          console.log('object', typeof data.user)
+          const userList = await userModel.find({
+            _id: { $in: data.user },
+          });
           res.status(200).send({
             success: true,
             message,
             data,
+            userList
           });
         }
       }
