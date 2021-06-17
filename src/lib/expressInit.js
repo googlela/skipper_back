@@ -44,7 +44,7 @@ const expressInit = (server) => {
 
     io.sockets.on("connection", function (socket) {
       socket.emit("connection", null);
-      console.log("Client has connected",socket.id);
+      // console.log("Client has connected",socket.id);
       socket.on("mouse", (data) => {
         socket.broadcast.emit("mouse", data);
       });
