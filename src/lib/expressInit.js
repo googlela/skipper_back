@@ -6,7 +6,6 @@ import { greenBright, cyanBright } from "chalk";
 import "../config/dbconfig";
 import { INTERNAL_LINKS } from "../enum";
 
-
 const expressInit = (server) => {
   return new Promise((resolve, reject) => {
     /** Environments */
@@ -17,7 +16,12 @@ const expressInit = (server) => {
     server.use(json());
     server.use(urlencoded({ extended: true }));
     /** CORS */
-    server.use(cors({ origin: true, credentials: true }));
+    server.use(
+      cors({
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+      })
+    );
 
     const BASE_API_URL = `http://${HOST}:${PORT}${INTERNAL_LINKS.BASE_API_URL}`;
     const NETWORK_BASE_API_URL = `http://${ip.address()}:${PORT}${
@@ -41,7 +45,6 @@ const expressInit = (server) => {
       },
     });
 
-
     io.sockets.on("connection", function (socket) {
       socket.emit("connection", null);
       // console.log("Client has connected",socket.id);
@@ -53,7 +56,6 @@ const expressInit = (server) => {
       console.log("Client has disconnected");
     });
 
- 
     resolve();
   });
 };
