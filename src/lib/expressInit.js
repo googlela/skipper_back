@@ -3,8 +3,9 @@ require("dotenv").config({ path: "src/config/.env" });
 import cors from "cors";
 import ip from "ip";
 import { greenBright, cyanBright } from "chalk";
-import "../config/dbconfig";
 import { INTERNAL_LINKS } from "../enum";
+import Dbconnection from "../config/dbconfig";
+import socketinit from "./socket";
 
 const expressInit = (server) => {
   return new Promise((resolve, reject) => {
@@ -37,25 +38,27 @@ const expressInit = (server) => {
         cyanBright(`${greenBright("\tLAN:")} ${NETWORK_BASE_API_URL}`)
       );
     });
-    // const httpServer = http.createServer();
-    var io = require("socket.io")(socketServer, {
-      cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"],
-      },
-    });
+    const io=socketinit(socketServer)
+    // var io = require("socket.io")(socketServer, {
+    //   cors: {
+    //     origin: "http://localhost:3000",
+    //     methods: ["GET", "POST"],
+    //   },
+    // });
 
-    io.sockets.on("connection", function (socket) {
-      socket.emit("connection", null);
-      // console.log("Client has connected",socket.id);
-      socket.on("mouse", (data) => {
-        socket.broadcast.emit("mouse", data);
-      });
-    });
-    io.sockets.on("disconnect", function () {
-      console.log("Client has disconnected");
-    });
+    // io.sockets.on("connection", function (socket) {
+    //   socket.emit("connection", null);
 
+    //   // console.log("Client has connected",socket.id);
+    //   socket.on("mouse", (data) => {
+    //     socket.broadcast.emit("mouse", data);
+    //   });
+    // });
+    // io.sockets.on("disconnect", function () {
+    //   console.log("Client has disconnected");
+    // });
+    
+    Dbconnection(io);
     resolve();
   });
 };

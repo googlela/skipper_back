@@ -1,6 +1,5 @@
 import { Types } from "mongoose";
 import { userModel, userGroupModel } from "../model";
-
 const GetGroup = async (req, res) => {
   let message = "Group details fetch successfully";
   try {

@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
 import { userModel, userGroupModel } from "../model";
 const joinGroup = async (req, res) => {
+
   let message = "user saved successfully";
   try {
     const { body } = req;
@@ -16,7 +17,6 @@ const joinGroup = async (req, res) => {
       let data = await userGroupModel.findOne().sort({ createdAt: -1 });
       if (data) {
         if (data.user.length === 5) {
-          console.log("true", true);
           let id = [];
           id.push(userSave._id);
           const userGroup = new userGroupModel({ user: id });
@@ -37,9 +37,7 @@ const joinGroup = async (req, res) => {
         if (!saveuserGroup) {
           throw "userGroup not save";
         } else {
-          console.log("saveuserGroup", saveuserGroup);
           const data = await userGroupModel.findById(groupId);
-          console.log('object', typeof data.user)
           const userList = await userModel.find({
             _id: { $in: data.user },
           });
@@ -53,7 +51,6 @@ const joinGroup = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log("error", error);
     res.status(400).send({
       success: true,
       message: error.message,
