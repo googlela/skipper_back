@@ -19,7 +19,7 @@ const expressInit = (server) => {
     /** CORS */
     server.use(
       cors({
-        origin: "http://localhost:3000",
+        origin: "*",
         methods: ["GET", "POST"],
       })
     );
