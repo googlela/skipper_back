@@ -38,10 +38,10 @@ const expressInit = (server) => {
         cyanBright(`${greenBright("\tLAN:")} ${NETWORK_BASE_API_URL}`)
       );
     });
-    const io=socketinit(socketServer)
+//     const io=socketinit(socketServer)
     var io = require("socket.io")(socketServer, {
       cors: {
-        origin: "http://localhost:3000",
+        origin: "https://scr-iozx.vercel.app",
         methods: ["GET", "POST"],
       },
     });
