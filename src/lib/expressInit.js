@@ -19,7 +19,7 @@ const expressInit = (server) => {
     /** CORS */
     server.use(
       cors({
-        origin: "*",
+        origin: "https://scr-iozx.vercel.app",
         methods: ["GET", "POST"],
       })
     );
@@ -39,24 +39,24 @@ const expressInit = (server) => {
       );
     });
     const io=socketinit(socketServer)
-    // var io = require("socket.io")(socketServer, {
-    //   cors: {
-    //     origin: "http://localhost:3000",
-    //     methods: ["GET", "POST"],
-    //   },
-    // });
+    var io = require("socket.io")(socketServer, {
+      cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"],
+      },
+    });
 
-    // io.sockets.on("connection", function (socket) {
-    //   socket.emit("connection", null);
+    io.sockets.on("connection", function (socket) {
+      socket.emit("connection", null);
 
-    //   // console.log("Client has connected",socket.id);
-    //   socket.on("mouse", (data) => {
-    //     socket.broadcast.emit("mouse", data);
-    //   });
-    // });
-    // io.sockets.on("disconnect", function () {
-    //   console.log("Client has disconnected");
-    // });
+      // console.log("Client has connected",socket.id);
+      socket.on("mouse", (data) => {
+        socket.broadcast.emit("mouse", data);
+      });
+    });
+    io.sockets.on("disconnect", function () {
+      console.log("Client has disconnected");
+    });
     
     Dbconnection(io);
     resolve();
